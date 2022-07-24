@@ -1,0 +1,8 @@
+[submodule "dependencies/gl3w"]
+	path = dependencies/gl3w
+	url = https://github.com/skaslev/gl3w.git
+	shallow = true
+[submodule "dependencies/dncomlib"]
+	path = dependencies/dncomlib
+	url = https://github.com/u16rogue/dncomlib.git
+	shallow = true

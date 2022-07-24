@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\src\meta_host.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\src\unknown_enumerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\src\dncomlib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\src\runtime_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\src\runtime_host.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\src\app_domain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\includes\dncomlib\unique_releasable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\includes\dncomlib\meta_host.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\includes\dncomlib\unknown_enumerator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\includes\dncomlib\dncomlib.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\includes\dncomlib\runtime_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\includes\dncomlib\runtime_host.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\includes\dncomlib\app_domain.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\Desktop\osu-cheese\dependencies\dncomlib\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{BD6EA2C8-7C84-310E-8E1C-540A74AF9239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{C8F9D66D-E847-3727-BEE1-BD2C01819B1A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
