@@ -36,28 +36,29 @@ auto features::aim_assist::on_tab_render() -> void
 	ImGui::SliderFloat("Target time offset ratio", &timeoffsetratio, 0.f, 1.f);
 	OC_IMGUI_HOVER_TXT("Amount of time ahead on recognizing a hit object as active.");
 
-	ImGui::Combo("Assist movement method", reinterpret_cast<int *>(&method), "Linear\0Directional Curve\0");
+	ImGui::Combo("Assist movement method", reinterpret_cast<int*>(&method), "Linear\0Directional Curve\0");
+
 	switch (method)
 	{
-		case features::aim_assist::method_e::DIRECTIONAL_CURVE:
-		{
-			ImGui::SliderFloat("Player to Hit object ratio", &mdc_ho_ratio, 0.f, 1.f);
-			OC_IMGUI_HOVER_TXT("Ratio to take in account from the player to the hit object when calculating the curve used for the aim assist.");
+	case features::aim_assist::method_e::DIRECTIONAL_CURVE:
+	{
+		ImGui::SliderFloat("Player to Hit object ratio", &mdc_ho_ratio, 0.f, 1.f);
+		OC_IMGUI_HOVER_TXT("Ratio to take in account from the player to the hit object when calculating the curve used for the aim assist.");
 
-			ImGui::SliderFloat("Player to direction ratio", &mdc_pdir_ratio, 0.f, 1.f);
-			OC_IMGUI_HOVER_TXT("Ratio to take in account from the player to the forward direction when calculating the curve used for the aim assist.");
+		ImGui::SliderFloat("Player to direction ratio", &mdc_pdir_ratio, 0.f, 1.f);
+		OC_IMGUI_HOVER_TXT("Ratio to take in account from the player to the forward direction when calculating the curve used for the aim assist.");
 
-			ImGui::SliderFloat("Midpoint ratio", &mdc_midpoint_ratio, 0.f, 1.f);
-			OC_IMGUI_HOVER_TXT("Ratio to calculate the mid point for the curve of the aim assist.");
+		ImGui::SliderFloat("Midpoint ratio", &mdc_midpoint_ratio, 0.f, 1.f);
+		OC_IMGUI_HOVER_TXT("Ratio to calculate the mid point for the curve of the aim assist.");
 
-			ImGui::Combo("Follow method", reinterpret_cast<int *>(&mdc_method), "Hit object to Player direction\0Player direction to Hit object\0Dynamic (Auto)\0");
-			OC_IMGUI_HOVER_TXT("Starting point of where to calculate the midpoint ratio from.");
+		ImGui::Combo("Follow method", reinterpret_cast<int*>(&mdc_method), "Hit object to Player direction\0Player direction to Hit object\0Dynamic (Auto)\0");
+		OC_IMGUI_HOVER_TXT("Starting point of where to calculate the midpoint ratio from.");
 
-			break;
-		}
+		break;
+	}
 
-		default:
-			break;
+	default:
+		break;
 	}
 
 	ImGui::Separator();
@@ -68,7 +69,7 @@ auto features::aim_assist::on_tab_render() -> void
 	ImGui::EndTabItem();
 }
 
-auto features::aim_assist::on_wndproc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam, void * reserved) -> bool
+auto features::aim_assist::on_wndproc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam, void* reserved) -> bool
 {
 	return false;
 }
@@ -84,6 +85,7 @@ auto features::aim_assist::on_render() -> void
 		draw->AddCircle(game::pp_viewpos_info->pos, fov, 0xFFFFFFFF);
 
 	auto [ho, i] = game::pp_phitobject.get_coming_hitobject(game::p_game_info->beat_time);
+
 	if (!ho)
 		return;
 
@@ -91,7 +93,7 @@ auto features::aim_assist::on_render() -> void
 		draw->AddCircle(ho->position.field_to_view(), safezone, 0xFFFFFFFF);
 }
 
-auto features::aim_assist::on_osu_set_raw_coords(sdk::vec2 * raw_coords) -> void
+auto features::aim_assist::on_osu_set_raw_coords(sdk::vec2* raw_coords) -> void
 {
 	if (auto _velocity = last_tick_point.distance(*raw_coords); _velocity != 0.f)
 	{
@@ -104,14 +106,16 @@ auto features::aim_assist::on_osu_set_raw_coords(sdk::vec2 * raw_coords) -> void
 		return;
 
 	auto [ho, i] = game::pp_phitobject.get_coming_hitobject(game::p_game_info->beat_time);
-	if (!ho)
-		return;
+
+	if (!ho) return;
 
 	// Check time offset
 	if (timeoffsetratio != 0.f && i != 0)
 	{
 		auto prev = ho - 1;
+
 		auto time_sub = ho->time.start - ((ho->time.start - prev->time.end) * (1.f - timeoffsetratio));
+
 		if (game::p_game_info->beat_time < time_sub)
 			return;
 	}
@@ -139,51 +143,51 @@ auto features::aim_assist::on_osu_set_raw_coords(sdk::vec2 * raw_coords) -> void
 
 	switch (method)
 	{
-		case method_e::LINEAR:
+	case method_e::LINEAR:
+	{
+		target = ho->position;
+		break;
+	}
+
+	case method_e::DIRECTIONAL_CURVE:
+	{
+		auto p2ho_p = player_field_pos.forward_towards(ho->position, dist_to_ho * mdc_ho_ratio);
+		auto p2dir_p = player_field_pos.forward(player_direction, dist_to_ho * mdc_pdir_ratio);
+
+		sdk::vec2 start, end;
+
+		switch (mdc_method)
 		{
-			target = ho->position;
+		case mdc_mpoint_method_e::HO_TO_PDIR:
+		{
+			start = p2ho_p;
+			end = p2dir_p;
 			break;
 		}
 
-		case method_e::DIRECTIONAL_CURVE:
+		case mdc_mpoint_method_e::DYNAMIC: // TODO: implement this
+		case mdc_mpoint_method_e::PDIR_TO_HO:
 		{
-			auto p2ho_p = player_field_pos.forward_towards(ho->position, dist_to_ho * mdc_ho_ratio);
-			auto p2dir_p = player_field_pos.forward(player_direction, dist_to_ho * mdc_pdir_ratio);
-
-			sdk::vec2 start, end;
-
-			switch (mdc_method)
-			{
-				case mdc_mpoint_method_e::HO_TO_PDIR:
-				{
-					start = p2ho_p;
-					end = p2dir_p;
-					break;
-				}
-
-				case mdc_mpoint_method_e::DYNAMIC: // TODO: implement this
-				case mdc_mpoint_method_e::PDIR_TO_HO:
-				{
-					start = p2dir_p;
-					end = p2ho_p;
-					break;
-				}
-
-				default:
-					break;
-			}
-
-			target = start.forward_towards(end, start.distance(end) * mdc_midpoint_ratio);
+			start = p2dir_p;
+			end = p2ho_p;
 			break;
 		}
 
 		default:
-			return;
+			break;
+		}
+
+		target = start.forward_towards(end, start.distance(end) * mdc_midpoint_ratio);
+		break;
 	}
 
-	new_coords      = player_field_pos.forward_towards(target, std::clamp(velocity * scaleassist, 0.f, dist_to_ho)).field_to_view();
+	default:
+		return;
+	}
+
+	new_coords = player_field_pos.forward_towards(target, std::clamp(velocity * scaleassist, 0.f, dist_to_ho)).field_to_view();
 	last_tick_point = new_coords; // update last tick point to our new coordinates since the new coords will now be our current point for the tick this also prevents over calculating the velocity
-	*raw_coords     = new_coords; // update the ingame coordinates
+	*raw_coords = new_coords; // update the ingame coordinates
 
 	if (!game::pp_raw_mode_info->is_raw)
 	{
@@ -195,7 +199,7 @@ auto features::aim_assist::on_osu_set_raw_coords(sdk::vec2 * raw_coords) -> void
 	return;
 }
 
-auto features::aim_assist::osu_set_field_coords_rebuilt(sdk::vec2 * out_coords) -> void
+auto features::aim_assist::osu_set_field_coords_rebuilt(sdk::vec2* out_coords) -> void
 {
 }
 
