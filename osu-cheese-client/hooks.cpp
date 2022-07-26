@@ -40,7 +40,7 @@ static auto CALLBACK CallWindowProc_hook(CallWindowProc_variant variant, HWND hW
 static decltype(CallWindowProcA)* CallWindowProcA_target = CallWindowProcA;
 static decltype(CallWindowProcW)* CallWindowProcW_target = CallWindowProcW;
 
-static auto __attribute__((naked)) CallWindowProc_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+static auto [[naked]] CallWindowProc_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
 	__asm
 	{
@@ -81,7 +81,7 @@ static auto __attribute__((naked)) CallWindowProc_proxy(WNDPROC lpPrevWndFunc, H
 	}
 }
 
-static auto __attribute__((naked)) CallWindowProcW_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+static auto [[naked]] CallWindowProcW_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
 	__asm
 	{
@@ -90,7 +90,7 @@ static auto __attribute__((naked)) CallWindowProcW_proxy(WNDPROC lpPrevWndFunc, 
 	};
 }
 
-static auto __attribute__((naked)) CallWindowProcA_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+static auto [[naked]] CallWindowProcA_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
 	__asm
 	{
@@ -126,7 +126,7 @@ static auto WINAPI gdi32full_SwapBuffers_hook(HDC hdc) -> void
 
 static decltype(SwapBuffers)* gdi32full_SwapBuffers_target{ nullptr };
 
-static auto __attribute__((naked)) gdi32full_SwapBuffers_proxy(HDC hdc) -> BOOL
+static auto [[naked]] gdi32full_SwapBuffers_proxy(HDC hdc) -> BOOL
 {
 	__asm
 	{
@@ -158,7 +158,7 @@ static auto WINAPI SetWindowTextW_hook(HWND hWnd, LPCWSTR lpString) -> void
 
 static decltype(SetWindowTextW)* SetWindowTextW_target = SetWindowTextW;
 
-static auto __attribute__((naked)) SetWindowTextW_proxy(HWND hWnd, LPCWSTR lpString) -> BOOL
+static auto [[naked]] SetWindowTextW_proxy(HWND hWnd, LPCWSTR lpString) -> BOOL
 {
 	__asm
 	{
@@ -184,7 +184,7 @@ static auto __fastcall osu_set_field_coords_rebuilt(void* ecx, sdk::vec2* out_co
 	features::dispatcher::osu_set_field_coords_rebuilt(out_coords);
 }
 
-static auto __attribute__((naked)) osu_set_field_coords_proxy(void* ecx, sdk::vec2* out_coords) -> void
+static auto [[naked]] osu_set_field_coords_proxy(void* ecx, sdk::vec2* out_coords) -> void
 {
 	__asm
 	{
@@ -212,7 +212,7 @@ static auto __fastcall osu_set_raw_coords_rebuilt(sdk::vec2* raw_coords) -> void
 	features::dispatcher::on_osu_set_raw_coords(raw_coords);
 }
 
-static auto __attribute__((naked)) osu_set_raw_coords_proxy() -> void
+static auto [[naked]] osu_set_raw_coords_proxy() -> void
 {
 	__asm
 	{
@@ -229,7 +229,7 @@ static auto __stdcall osu_ac_flag() -> void
 	DEBUG_PRINTF("\n[!] Anti-cheat flag triggered!");
 }
 
-static auto __attribute__((naked)) osu_ac_flag_proxy() -> void
+static auto [[naked]] osu_ac_flag_proxy() -> void
 {
 	__asm
 	{
