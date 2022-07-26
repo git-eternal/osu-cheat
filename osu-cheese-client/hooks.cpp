@@ -85,7 +85,7 @@ static auto [[naked]] CallWindowProcW_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UI
 {
 	__asm
 	{
-		mov eax, CallWindowProc_variant::W
+		mov eax, 1
 		jmp CallWindowProc_proxy
 	};
 }
@@ -94,7 +94,7 @@ static auto [[naked]] CallWindowProcA_proxy(WNDPROC lpPrevWndFunc, HWND hWnd, UI
 {
 	__asm
 	{
-		mov eax, CallWindowProc_variant::A // can just be xor eax, eax but this looks more verbose...
+		mov eax, 0 // can just be xor eax, eax but this looks more verbose...
 		jmp CallWindowProc_proxy
 	};
 }
