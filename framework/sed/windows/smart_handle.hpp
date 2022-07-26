@@ -11,7 +11,7 @@ namespace sed
 		smart_handle(smart_handle &)       = delete;
 		smart_handle(const smart_handle &) = delete;
 
-		smart_handle();
+		smart_handle() = default;
 		smart_handle(HANDLE hnd_);
 		~smart_handle();
 		
@@ -21,6 +21,6 @@ namespace sed
 		operator HANDLE() const noexcept;
 		operator bool() const noexcept;
 	private:
-		HANDLE hnd;
+		HANDLE hnd = nullptr;
 	};
 }
