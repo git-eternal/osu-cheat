@@ -10,7 +10,7 @@ auto dncomlib::runtime_info::is_started(DWORD* out_startup_flags) -> bool
 	BOOL  flag{};
 	DWORD dummy_flags{};
 
-	if (instance->IsStarted(&flag, out_startup_flags ? : /* hello msvc compiler users :) */ &dummy_flags) != S_OK)
+	if (instance->IsStarted(&flag, out_startup_flags ? out_startup_flags : /* hello msvc compiler users :) */ &dummy_flags) != S_OK)
 		return false;
 
 	return flag;

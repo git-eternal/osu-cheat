@@ -2,9 +2,6 @@
 
 #include <utility>
 
-sed::smart_handle::smart_handle()
-	: hnd(nullptr) {}
-
 sed::smart_handle::smart_handle(HANDLE hnd_)
 	: hnd(hnd_) {}
 

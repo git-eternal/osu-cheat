@@ -7,3 +7,4 @@ add_library(gl3w STATIC "src/gl3w.c")
 
 set(gl3w-includes "${CMAKE_CURRENT_SOURCE_DIR}/include" PARENT_SCOPE)
 set_target_properties(gl3w PROPERTIES LINKER_LANGUAGE C)
+target_include_directories(gl3w PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
